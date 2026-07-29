@@ -8,8 +8,6 @@ on:
   push:
     branches:
       - main
-      # Remove once this branch has been merged into main.
-      - claude/new-repo-p7uvqt
   workflow_dispatch:
 
 permissions:
