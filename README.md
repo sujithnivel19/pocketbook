@@ -22,7 +22,17 @@ To try it on a phone, serve from a machine on the same network and open that mac
 
 ### Deploying
 
-Any static host works — copy the repository as-is. For GitHub Pages: enable Pages for the repository, point it at this branch, and the app runs from the published URL with no further configuration. The paths are all relative, so it does not matter whether it is served from the domain root or a subdirectory.
+Any static host works — copy the repository as-is. Every path is relative, so it does not matter whether the app is served from a domain root or a subdirectory.
+
+**GitHub Pages** is wired up in `.github/workflows/pages.yml`, which publishes the repository on every push to `main`. It needs one manual step first, once per repository:
+
+> **Settings → Pages → Build and deployment → Source → GitHub Actions**
+
+That switch cannot be set from a workflow. Creating a Pages site requires admin permission, and `GITHUB_TOKEN` does not have it however `permissions:` is written — `pages: write` grants deploying to a site that already exists, not creating one. Until the switch is flipped the job fails at `configure-pages` with *"Resource not accessible by integration"*.
+
+After that, pushes deploy on their own and the site appears at `https://<user>.github.io/pocketbook/`.
+
+**Camera capture and installation need HTTPS.** Pages provides it. On a plain-HTTP LAN address the app still runs and OCR still works, but the camera and the install prompt stay unavailable — use file upload to test, or put a TLS tunnel in front.
 
 ---
 

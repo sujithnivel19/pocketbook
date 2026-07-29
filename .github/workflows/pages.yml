@@ -44,8 +44,12 @@ jobs:
           for f in src/*.js src/ui/*.js; do node --check "$f"; done
           echo "shell ok"
 
-      # enablement turns Pages on for the repository the first time this runs,
-      # so deploying needs no manual trip through repository settings.
+      # Requires Pages to already be enabled with "GitHub Actions" as the source
+      # (Settings → Pages). A workflow cannot do this for itself: creating a
+      # Pages site needs admin permission, and GITHUB_TOKEN never has it —
+      # `pages: write` covers deploying to an existing site, not creating one.
+      # enablement is left on so the step succeeds unattended once someone with
+      # admin rights has run it or flipped the switch.
       - uses: actions/configure-pages@v5
         with:
           enablement: true
