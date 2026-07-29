@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B0C0F">
+<meta name="description" content="Pocketbook keeps your documents on your phone and answers questions from them. Nothing ever leaves your device.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pocketbook">
+<title>Pocketbook</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/icon-180.png">
+<link rel="stylesheet" href="./styles/app.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Pocketbook</div>
+  <div class="pill">On device</div>
+  <button class="icon-btn" id="settings-btn" aria-label="Settings">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.55V21a2 2 0 11-4 0v-.1A1.7 1.7 0 008 19.3a1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.7 1.7 0 003.64 15a1.7 1.7 0 00-1.55-1H2a2 2 0 110-4h.1A1.7 1.7 0 003.64 9a1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06A1.7 1.7 0 008 4.64 1.7 1.7 0 009 3.09V3a2 2 0 114 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06A1.7 1.7 0 0020.36 9v0a1.7 1.7 0 001.55 1H22a2 2 0 110 4h-.09a1.7 1.7 0 00-1.55 1z"/></svg>
+  </button>
+</div>
+
+<!-- ══ ASK ══ -->
+<div class="view active" id="v-ask">
+  <div class="ask-top">
+    <div class="hero">
+      <h1 id="hero-title">Welcome to<br>your pocketbook.</h1>
+      <p id="hero-sub">Add a document, then ask for anything inside it in plain words.</p>
+    </div>
+
+    <div class="search-wrap">
+      <button class="sb" id="sb-open">
+        <svg class="mag" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L17 17"/></svg>
+        <span class="ph" id="sb-ph">what's my aadhaar number?</span>
+        <span class="go" aria-hidden="true">
+          <svg viewBox="0 0 24 24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="answer" id="answer" role="region" aria-live="polite" aria-label="Answer"></div>
+
+  <div>
+    <div class="slabel">Recent<button class="link" id="see-all" hidden>See all</button></div>
+    <div class="list" id="ask-list"></div>
+  </div>
+</div>
+
+<!-- ══ DOCUMENTS ══ -->
+<div class="view" id="v-docs">
+  <div class="hero">
+    <h1>Documents</h1>
+    <p>Text is read on device and never leaves it. You confirm every field before it's saved.</p>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div>
+    <div class="list" id="doc-list"></div>
+  </div>
+</div>
+
+<input type="file" id="cam-in" accept="image/*" capture="environment">
+<input type="file" id="file-in" accept="image/*" multiple>
+<input type="file" id="pdf-in" accept="application/pdf,.pdf" multiple>
+<input type="file" id="restore-in" accept=".pocketbook,application/json">
+
+<!-- Speed dial -->
+<div class="dial-scrim" id="dial-scrim"></div>
+<div class="dial" id="dial">
+  <button class="dial-opt" id="pdf-btn">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M9 18h3"/></svg>
+    PDF
+  </button>
+  <button class="dial-opt" id="gal-btn">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7.5 8.5L12 4l4.5 4.5"/><path d="M4 16v2.5A2.5 2.5 0 006.5 21h11a2.5 2.5 0 002.5-2.5V16"/></svg>
+    Upload
+  </button>
+  <button class="dial-opt" id="cam-btn">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    Scan
+  </button>
+</div>
+
+<button class="fab" id="fab" aria-expanded="false">
+  <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  <span class="sr-only">Add document</span>
+</button>
+
+<!-- Bottom tabs -->
+<nav class="tabbar" aria-label="Main">
+  <button class="tab on" data-view="ask" aria-current="page">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke-width="2"/><path d="M20.5 20.5L17 17" stroke-width="2" stroke-linecap="round"/></svg>
+    <span>Ask</span>
+  </button>
+  <div class="tab-gap"></div>
+  <button class="tab" data-view="docs">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6" stroke-width="2" stroke-linejoin="round"/></svg>
+    <span>Documents</span>
+  </button>
+</nav>
+
+<!-- Ask overlay -->
+<div class="ovl" id="ovl">
+  <div class="ovl-inner">
+    <div class="recents" id="recents"></div>
+    <div class="ovl-bar">
+      <div class="ovl-field">
+        <input type="text" id="q-input" placeholder="what's my aadhaar number?" autocomplete="off"
+               autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="search"
+               aria-label="Ask your pocketbook">
+        <button class="go" id="q-go" aria-label="Ask">
+          <svg viewBox="0 0 24 24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <button class="ovl-cancel" id="q-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reading overlay -->
+<div class="scan" id="scan" role="status" aria-live="polite">
+  <div class="scan-frame"><div class="scan-line"></div></div>
+  <div class="scan-s" id="scan-s">Reading document…</div>
+  <div class="scan-sub" id="scan-sub"></div>
+</div>
+
+<!-- Review sheet -->
+<div class="sheet-bd" id="rev-bd">
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Confirm details">
+    <div class="grab"></div>
+    <h2>Confirm details</h2>
+    <div class="sub" id="rev-sub">Fix anything that came out wrong, then save it.</div>
+    <div class="tsel">
+      <span>Document type</span>
+      <div class="seg" id="type-seg">
+        <button data-t="ID">ID</button>
+        <button data-t="Certificate">Certificate</button>
+        <button data-t="Bill">Bill</button>
+        <button data-t="Other">Other</button>
+      </div>
+    </div>
+    <div class="frow" style="margin-bottom:20px">
+      <span class="fl">Name</span>
+      <input class="fv" id="rev-name" aria-label="Document name">
+    </div>
+    <div class="slabel">Detected fields</div>
+    <div id="flist"></div>
+    <button class="addf" id="addf">+ Add field</button>
+    <div class="slabel">Raw text</div>
+    <div class="raw" id="raw"></div>
+    <div class="acts">
+      <button class="btn d" id="discard">Discard</button>
+      <button class="btn p" id="save">Save to pocketbook</button>
+    </div>
+  </div>
+</div>
+
+<!-- Detail sheet -->
+<div class="sheet-bd" id="det-bd">
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Document">
+    <div class="grab"></div>
+    <h2 id="d-title">Document</h2>
+    <div class="sub" id="d-sub"></div>
+    <div id="d-preview"></div>
+    <div id="d-fields"></div>
+    <div class="acts" style="margin-top:20px;">
+      <button class="btn d" id="d-del">Delete</button>
+      <button class="btn" id="d-edit">Edit</button>
+      <button class="btn p" id="d-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings sheet -->
+<div class="sheet-bd" id="set-bd">
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Settings">
+    <div class="grab"></div>
+    <h2>Settings</h2>
+    <div class="sub">Everything here happens on this device.</div>
+    <div id="set-body"></div>
+    <div class="acts" style="margin-top:20px;">
+      <button class="btn p" id="set-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Prompt sheet (PIN / passphrase / confirmations) -->
+<div class="sheet-bd" id="ask-bd">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="ask-title">
+    <div class="grab"></div>
+    <h2 id="ask-title">Confirm</h2>
+    <div class="sub" id="ask-sub"></div>
+    <div id="ask-body"></div>
+    <div class="acts">
+      <button class="btn" id="ask-cancel">Cancel</button>
+      <button class="btn p" id="ask-ok">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lock screen -->
+<div class="lock" id="lock" role="dialog" aria-modal="true" aria-label="Locked">
+  <img class="mark" src="./assets/icon.svg" alt="" width="56" height="56">
+  <h2>Pocketbook is locked</h2>
+  <p id="lock-msg">Enter your PIN to unlock.</p>
+  <div class="dots" id="lock-dots"></div>
+  <div class="keypad" id="keypad"></div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

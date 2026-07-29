@@ -1,0 +1,14 @@
+{
+  "name": "pocketbook",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Your documents, on your phone. Ask for anything inside them in plain words. Nothing ever leaves your device.",
+  "type": "module",
+  "scripts": {
+    "start": "node tools/serve.js",
+    "icons": "python3 tools/make-icons.py"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

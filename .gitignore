@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+*.log
+
+# Backups produced by the app itself — never commit these.
+*.pocketbook
