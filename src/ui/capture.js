@@ -1,5 +1,5 @@
 /**
- * Capture: camera, image upload, PDF.
+ * Capture: camera, image upload (including PDFs).
  *
  * Everything funnels into the same place — text out, fields proposed, review
  * sheet opened. Nothing is written to the vault from here; only the review
@@ -129,9 +129,8 @@ export function init() {
   const pick = (id) => { setDial(false); $(`#${id}`).click(); };
   $('#cam-btn').addEventListener('click', () => pick('cam-in'));
   $('#gal-btn').addEventListener('click', () => pick('file-in'));
-  $('#pdf-btn').addEventListener('click', () => pick('pdf-in'));
 
-  for (const id of ['cam-in', 'file-in', 'pdf-in']) {
+  for (const id of ['cam-in', 'file-in']) {
     $(`#${id}`).addEventListener('change', async (e) => {
       const files = [...e.target.files];
       e.target.value = '';
