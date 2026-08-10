@@ -77,6 +77,7 @@ button, input, textarea { font-family: inherit; color: inherit; }
   color: var(--muted); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: color 0.2s, transform 0.18s var(--ease);
+  margin-left: auto;
 }
 .icon-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.9; }
 .icon-btn:active { transform: scale(0.9); color: var(--text); }
