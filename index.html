@@ -81,18 +81,16 @@
   </button>
 </div>
 
-<button class="fab" id="fab" aria-expanded="false">
-  <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-  <span class="sr-only">Add document</span>
-</button>
-
-<!-- Bottom tabs -->
+<!-- Bottom tabs with integrated FAB -->
 <nav class="tabbar" aria-label="Main">
   <button class="tab on" data-view="ask" aria-current="page">
     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke-width="2"/><path d="M20.5 20.5L17 17" stroke-width="2" stroke-linecap="round"/></svg>
     <span>Ask</span>
   </button>
-  <div class="tab-gap"></div>
+  <button class="fab" id="fab" aria-expanded="false">
+    <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    <span class="sr-only">Add document</span>
+  </button>
   <button class="tab" data-view="docs">
     <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6" stroke-width="2" stroke-linejoin="round"/></svg>
     <span>Documents</span>
