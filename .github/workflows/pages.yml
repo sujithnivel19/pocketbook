@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+# Pocketbook is a static app with no build step, so the repository is published
+# as-is. The vendored OCR engine under vendor/ is part of the deployment — it is
+# what lets the app work offline and without a CDN.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it half-published.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the app shell is intact
+        run: |
+          set -e
+          for f in index.html manifest.webmanifest sw.js styles/app.css src/main.js \
+                   vendor/tesseract/tesseract.esm.min.js \
+                   vendor/tessdata/eng.traineddata.gz \
+                   vendor/pdfjs/pdf.min.mjs; do
+            [ -s "$f" ] || { echo "missing or empty: $f"; exit 1; }
+          done
+          node --check sw.js
+          for f in src/*.js src/ui/*.js; do node --check "$f"; done
+          echo "shell ok"
+
+      # Requires Pages to already be enabled with "GitHub Actions" as the source
+      # (Settings → Pages). A workflow cannot do this for itself: creating a
+      # Pages site needs admin permission, and GITHUB_TOKEN never has it —
+      # `pages: write` covers deploying to an existing site, not creating one.
+      # enablement is left on so the step succeeds unattended once someone with
+      # admin rights has run it or flipped the switch.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
