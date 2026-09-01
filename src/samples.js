@@ -69,7 +69,7 @@ function renderCard(sample) {
   g.font = '600 30px Instrument Sans, sans-serif';
   g.fillText(sample.name.toUpperCase(), 40, 54);
 
-  g.font = '400 17px DM Mono, monospace';
+  g.font = '400 17px Instrument Sans, sans-serif';
   g.fillStyle = '#6B6A63';
   g.fillText(sample.type, 40, 132);
 
@@ -79,7 +79,7 @@ function renderCard(sample) {
     g.font = '400 16px Instrument Sans, sans-serif';
     g.fillText(field.label.toUpperCase(), 40, y);
     g.fillStyle = '#1E1E1B';
-    g.font = '500 30px DM Mono, monospace';
+    g.font = '500 30px Instrument Sans, sans-serif';
     g.fillText(field.value, 40, y + 38);
     y += 90;
   }
